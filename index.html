@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#244a29">
+  <meta name="description" content="Добрий господар — замовлення товарів із самовивозом у Снігурівці.">
+  <title>Добрий господар — замовлення товарів</title>
+  <link rel="icon" href="assets/logo.png">
+  <link rel="apple-touch-icon" href="assets/logo.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="#top"><img src="assets/logo.png" alt="Логотип"><span>Добрий господар</span></a>
+  <nav class="desktop-nav"><a href="#catalog">Каталог</a><a href="#how">Як замовити</a><a href="#about">Про нас</a><a href="#contacts">Контакти</a></nav>
+  <button id="cartButton" class="cart-button">Кошик <span id="cartCount">0</span></button>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <img class="hero-image" src="assets/facade.jpg" alt="Фасад магазину">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <img class="hero-logo" src="assets/logo.png" alt="">
+      <p class="eyebrow">Магазин у Снігурівці</p>
+      <h1>Замовляйте потрібні товари заздалегідь</h1>
+      <p>Свіже м’ясо, заморожена риба, домашня випічка, напівфабрикати та крупи. Самовивіз із магазину, оплата при отриманні.</p>
+      <div class="hero-actions">
+        <a class="primary-button" href="#catalog">Перейти до каталогу</a>
+        <a class="secondary-button" href="https://maps.app.goo.gl/y5YqMkKVmLzNXz3v9" target="_blank">Прокласти маршрут</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="notice"><strong>Онлайн-оплати немає.</strong> Оплачуйте готівкою або карткою через термінал у магазині.</section>
+
+  <section id="catalog" class="section">
+    <div class="section-heading">
+      <div><p class="eyebrow">Попереднє замовлення</p><h2>Каталог товарів</h2></div>
+      <label class="search-box"><span class="sr-only">Пошук</span><input id="searchInput" type="search" placeholder="Знайти товар"></label>
+    </div>
+    <div id="categoryFilters" class="category-filters"></div>
+    <div id="catalogStatus" class="catalog-status">Завантажуємо каталог…</div>
+    <div id="productGrid" class="product-grid"></div>
+  </section>
+
+  <section id="how" class="section soft-section">
+    <div class="section-heading"><div><p class="eyebrow">Просто і зручно</p><h2>Як зробити замовлення</h2></div></div>
+    <div class="steps">
+      <article><span>1</span><h3>Оберіть товари</h3><p>Додайте потрібну кількість у кошик.</p></article>
+      <article><span>2</span><h3>Вкажіть дату</h3><p>Оберіть дату і час отримання.</p></article>
+      <article><span>3</span><h3>Отримайте підтвердження</h3><p>Працівник магазину перевірить замовлення.</p></article>
+      <article><span>4</span><h3>Заберіть і оплатіть</h3><p>Оплатіть у магазині готівкою або карткою.</p></article>
+    </div>
+  </section>
+
+  <section id="about" class="section">
+    <div class="about-grid">
+      <div><p class="eyebrow">Свої люди — свої продукти</p><h2>Готуємо і працюємо для нашої громади</h2><p>Основні товари можна замовити заздалегідь, а решту покупок — зробити у магазині.</p></div>
+      <div class="photo-collage"><img src="assets/team.jpg" alt="Працівники"><img src="assets/baking-1.jpg" alt="Випікання"><img src="assets/freezing.jpg" alt="Заморожування"></div>
+    </div>
+  </section>
+
+  <section id="contacts" class="section contact-section">
+    <div><p class="eyebrow">Самовивіз</p><h2>Контакти магазину</h2><p><strong>Адреса:</strong> м. Снігурівка, Миколаївська область, вул. В. Бойченка, 95</p></div>
+    <div class="contact-links">
+      <a href="https://t.me/gospodarsng" target="_blank">Telegram</a>
+      <a href="https://maps.app.goo.gl/y5YqMkKVmLzNXz3v9" target="_blank">Google Maps</a>
+      <a href="https://www.facebook.com/profile.php?id=61590557807294" target="_blank">Facebook</a>
+      <a href="https://www.instagram.com/d.s.gospodar/" target="_blank">Instagram</a>
+    </div>
+  </section>
+</main>
+
+<footer><img src="assets/logo.png" alt=""><div><strong>Добрий господар</strong><p>Попереднє замовлення товарів із самовивозом.</p></div></footer>
+
+<dialog id="productDialog" class="product-dialog"><button class="dialog-close" data-close-dialog>×</button><div id="productDialogContent"></div></dialog>
+
+<aside id="cartDrawer" class="cart-drawer" aria-hidden="true">
+  <div class="cart-header"><h2>Ваше замовлення</h2><button id="closeCartButton">×</button></div>
+  <div id="cartItems" class="cart-items"></div>
+  <div class="cart-summary"><div><span>Разом</span><strong id="cartTotal">0 грн</strong></div><p>Для вагових товарів остаточна сума може змінитися після зважування.</p><button id="checkoutButton" class="primary-button full-width">Оформити замовлення</button></div>
+</aside>
+<div id="drawerBackdrop" class="drawer-backdrop"></div>
+
+<dialog id="checkoutDialog" class="checkout-dialog">
+  <button class="dialog-close" data-close-checkout>×</button>
+  <h2>Оформлення замовлення</h2>
+  <form id="checkoutForm">
+    <label>Ім’я<input name="customerName" required></label>
+    <label>Телефон<input name="phone" required inputmode="tel" placeholder="0XX XXX XX XX"></label>
+    <div class="form-row">
+      <label>Дата забору<input id="pickupDate" name="pickupDate" type="date" required></label>
+      <label>Час забору<select name="pickupTime" required><option value="">Оберіть час</option><option>08:00–10:00</option><option>10:00–12:00</option><option>12:00–15:00</option><option>15:00–17:00</option><option>17:00–19:00</option></select></label>
+    </div>
+    <label>Спосіб оплати<select name="paymentMethod" required><option>Готівка</option><option>Картка через термінал</option></select></label>
+    <label>Коментар<textarea name="comment" rows="3"></textarea></label>
+    <label class="consent"><input type="checkbox" required> Погоджуюсь на обробку даних для виконання замовлення.</label>
+    <div id="checkoutStatus" class="checkout-status"></div>
+    <button class="primary-button full-width" type="submit">Надіслати замовлення</button>
+  </form>
+</dialog>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Мій кабінет — Добрий господар
+  </title>
+
+  <meta
+    name="description"
+    content="Кабінет покупця магазину Добрий господар."
+  >
+
+  <meta
+    name="theme-color"
+    content="#315f38"
+  >
+
+  <link
+    rel="manifest"
+    href="manifest.json"
+  >
+
+  <link
+    rel="stylesheet"
+    href="styles.css"
+  >
+</head>
+
+
+<body data-page="account">
+
+  <!-- ======================================================
+       ШАПКА
+       ====================================================== -->
+
+  <header class="dh-header">
+
+    <div class="dh-header-inner">
+
+      <a
+        href="index.html"
+        class="dh-brand"
+        aria-label="Добрий господар — головна"
+      >
+
+        <span class="dh-brand-mark">
+          ДГ
+        </span>
+
+        <span class="dh-brand-text">
+
+          <strong data-store-name>
+            Добрий господар
+          </strong>
+
+          <small>
+            Снігурівка
+          </small>
+
+        </span>
+
+      </a>
+
+
+      <button
+        type="button"
+        class="dh-menu-button"
+        data-menu-toggle
+        aria-label="Відкрити меню"
+      >
+        ☰
+      </button>
+
+
+      <nav
+        class="dh-nav"
+        data-main-nav
+        aria-label="Головне меню"
+      >
+
+        <a href="index.html">
+          Головна
+        </a>
+
+        <a href="catalog.html">
+          Каталог
+        </a>
+
+        <a href="how-to-order.html">
+          Як замовити
+        </a>
+
+        <a href="about.html">
+          Про нас
+        </a>
+
+        <a href="contacts.html">
+          Контакти
+        </a>
+
+      </nav>
+
+
+      <div class="dh-header-actions">
+
+        <a
+          href="account.html"
+          class="dh-header-icon"
+          aria-label="Мій кабінет"
+          title="Мій кабінет"
+        >
+          👤
+        </a>
+
+
+        <a
+          href="cart.html"
+          class="dh-cart-button"
+          aria-label="Кошик"
+        >
+
+          <span>
+            🛒
+          </span>
+
+          <span class="dh-cart-text">
+            Кошик
+          </span>
+
+          <span
+            class="dh-cart-count"
+            data-cart-count
+            hidden
+          >
+            0
+          </span>
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- ======================================================
+       ОСНОВНИЙ ВМІСТ
+       ====================================================== -->
+
+  <main id="pageError">
+
+    <div class="dh-container dh-breadcrumbs">
+
+      <a href="index.html">
+        Головна
+      </a>
+
+      <span>→</span>
+
+      <span>
+        Мій кабінет
+      </span>
+
+    </div>
+
+
+
+    <!-- ====================================================
+         ЗАГОЛОВОК
+         ==================================================== -->
+
+    <section class="dh-page-hero">
+
+      <div class="dh-container">
+
+        <span class="dh-section-label">
+          Кабінет покупця
+        </span>
+
+
+        <h1>
+          Мої замовлення
+        </h1>
+
+
+        <p>
+
+          Тут згодом можна буде
+          переглядати історію замовлень,
+          їхній статус,
+          дату отримання
+          та скасовувати замовлення
+          до завершення прийому
+          на поставку.
+
+        </p>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ====================================================
+         КАБІНЕТ
+         ==================================================== -->
+
+    <section class="dh-section">
+
+      <div class="dh-container">
+
+        <div id="accountContent">
+
+          <div class="dh-loading">
+            Завантажуємо кабінет…
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ====================================================
+         ЩО БУДЕ В КАБІНЕТІ
+         ==================================================== -->
+
+    <section
+      class="dh-section dh-section-soft"
+    >
+
+      <div class="dh-container">
+
+        <div class="dh-section-heading">
+
+          <div>
+
+            <span class="dh-section-label">
+              У наступному етапі
+            </span>
+
+
+            <h2>
+              Що з’явиться в кабінеті
+            </h2>
+
+          </div>
+
+        </div>
+
+
+        <div class="dh-benefits-grid">
+
+
+          <article class="dh-benefit-card">
+
+            <span>
+              🧾
+            </span>
+
+            <h3>
+              Історія замовлень
+            </h3>
+
+            <p>
+
+              Покупець бачитиме
+              свої попередні
+              та поточні замовлення.
+
+            </p>
+
+          </article>
+
+
+
+          <article class="dh-benefit-card">
+
+            <span>
+              🔄
+            </span>
+
+            <h3>
+              Статус
+            </h3>
+
+            <p>
+
+              Нове,
+              підтверджено,
+              готується,
+              готове до видачі
+              або видано.
+
+            </p>
+
+          </article>
+
+
+
+          <article class="dh-benefit-card">
+
+            <span>
+              📅
+            </span>
+
+            <h3>
+              Дата отримання
+            </h3>
+
+            <p>
+
+              Для кожного замовлення
+              буде видно
+              погоджену дату
+              та час самовивозу.
+
+            </p>
+
+          </article>
+
+
+
+          <article class="dh-benefit-card">
+
+            <span>
+              ❌
+            </span>
+
+            <h3>
+              Самоскасування
+            </h3>
+
+            <p>
+
+              До дедлайну поставки
+              покупець зможе
+              самостійно скасувати
+              дозволене замовлення.
+
+            </p>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ====================================================
+         ПОКИ БЕЗ РЕЄСТРАЦІЇ
+         ==================================================== -->
+
+    <section class="dh-section">
+
+      <div class="dh-container">
+
+        <div class="dh-preorder-banner">
+
+          <div class="dh-preorder-icon">
+            👤
+          </div>
+
+
+          <div class="dh-preorder-content">
+
+            <span class="dh-section-label">
+              Важливо
+            </span>
+
+
+            <h2>
+              Реєстрація не потрібна для покупки
+            </h2>
+
+
+            <p>
+
+              Навіть після запуску кабінету
+              покупець зможе оформити
+              звичайне замовлення
+              без створення облікового запису.
+
+              Кабінет буде додатковою
+              зручною можливістю,
+              а не обов’язковою умовою.
+
+            </p>
+
+          </div>
+
+
+          <a
+            href="catalog.html"
+            class="dh-primary-btn"
+          >
+            До каталогу
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+
+  <!-- ======================================================
+       FOOTER
+       ====================================================== -->
+
+  <footer class="dh-footer">
+
+    <div class="dh-container dh-footer-grid">
+
+
+      <div class="dh-footer-brand">
+
+        <a
+          href="index.html"
+          class="dh-brand dh-brand-footer"
+        >
+
+          <span class="dh-brand-mark">
+            ДГ
+          </span>
+
+          <span class="dh-brand-text">
+
+            <strong data-store-name>
+              Добрий господар
+            </strong>
+
+            <small>
+              Магазин «Господар»
+            </small>
+
+          </span>
+
+        </a>
+
+
+        <p>
+
+          Замовляйте товари
+          завчасно та забирайте
+          готове замовлення
+          у магазині.
+
+        </p>
+
+      </div>
+
+
+
+      <div class="dh-footer-column">
+
+        <strong>
+          Покупцям
+        </strong>
+
+        <a href="catalog.html">
+          Каталог
+        </a>
+
+        <a href="how-to-order.html">
+          Як замовити
+        </a>
+
+        <a href="cart.html">
+          Кошик
+        </a>
+
+        <a href="account.html">
+          Мій кабінет
+        </a>
+
+      </div>
+
+
+
+      <div class="dh-footer-column">
+
+        <strong>
+          Інформація
+        </strong>
+
+        <a href="about.html">
+          Про нас
+        </a>
+
+        <a href="contacts.html">
+          Контакти
+        </a>
+
+        <a href="contacts.html">
+          Як нас знайти
+        </a>
+
+      </div>
+
+
+
+      <div class="dh-footer-column">
+
+        <strong>
+          Самовивіз
+        </strong>
+
+        <p data-store-address>
+          м. Снігурівка,
+          вул. В. Бойченка, 95
+        </p>
+
+        <a href="contacts.html">
+          Прокласти маршрут →
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <div class="dh-footer-bottom">
+
+      <div class="dh-container">
+
+        <span>
+          © <span id="currentYear"></span>
+          Добрий господар
+        </span>
+
+        <span>
+          Снігурівка
+        </span>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+
+  <!-- ======================================================
+       JAVASCRIPT
+       ====================================================== -->
+
+  <script src="app.js"></script>
+
+
+  <script>
+
+    const yearElement =
+      document.getElementById(
+        'currentYear'
+      );
+
+    if (yearElement) {
+      yearElement.textContent =
+        new Date().getFullYear();
+    }
+
+
+    if (
+      'serviceWorker' in navigator
+    ) {
+
+      window.addEventListener(
+        'load',
+        () => {
+
+          navigator
+            .serviceWorker
+            .register(
+              'service-worker.js'
+            )
+            .catch(
+              (error) => {
+
+                console.log(
+                  'Service Worker:',
+                  error
+                );
+
+              }
+            );
+
+        }
+      );
+
+    }
+
+  </script>
+
+</body>
+</html>

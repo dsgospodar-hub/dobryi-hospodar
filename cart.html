@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Кошик — Добрий господар
+  </title>
+
+  <meta
+    name="description"
+    content="Ваше замовлення у магазині Добрий господар."
+  >
+
+  <meta
+    name="theme-color"
+    content="#315f38"
+  >
+
+  <link
+    rel="manifest"
+    href="manifest.json"
+  >
+
+  <link
+    rel="stylesheet"
+    href="styles.css"
+  >
+</head>
+
+
+<body data-page="cart">
+
+  <!-- ======================================================
+       ШАПКА
+       ====================================================== -->
+
+  <header class="dh-header">
+
+    <div class="dh-header-inner">
+
+      <a
+        href="index.html"
+        class="dh-brand"
+        aria-label="Добрий господар — головна"
+      >
+
+        <span class="dh-brand-mark">
+          ДГ
+        </span>
+
+        <span class="dh-brand-text">
+
+          <strong data-store-name>
+            Добрий господар
+          </strong>
+
+          <small>
+            Снігурівка
+          </small>
+
+        </span>
+
+      </a>
+
+
+      <button
+        type="button"
+        class="dh-menu-button"
+        data-menu-toggle
+        aria-label="Відкрити меню"
+      >
+        ☰
+      </button>
+
+
+      <nav
+        class="dh-nav"
+        data-main-nav
+        aria-label="Головне меню"
+      >
+
+        <a href="index.html">
+          Головна
+        </a>
+
+        <a href="catalog.html">
+          Каталог
+        </a>
+
+        <a href="how-to-order.html">
+          Як замовити
+        </a>
+
+        <a href="about.html">
+          Про нас
+        </a>
+
+        <a href="contacts.html">
+          Контакти
+        </a>
+
+      </nav>
+
+
+      <div class="dh-header-actions">
+
+        <a
+          href="account.html"
+          class="dh-header-icon"
+          aria-label="Мій кабінет"
+          title="Мій кабінет"
+        >
+          👤
+        </a>
+
+
+        <a
+          href="cart.html"
+          class="dh-cart-button"
+          aria-label="Кошик"
+        >
+
+          <span>
+            🛒
+          </span>
+
+          <span class="dh-cart-text">
+            Кошик
+          </span>
+
+          <span
+            class="dh-cart-count"
+            data-cart-count
+            hidden
+          >
+            0
+          </span>
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- ======================================================
+       ОСНОВНИЙ ВМІСТ
+       ====================================================== -->
+
+  <main id="pageError">
+
+    <div class="dh-container dh-breadcrumbs">
+
+      <a href="index.html">
+        Головна
+      </a>
+
+      <span>
+        →
+      </span>
+
+      <span>
+        Кошик
+      </span>
+
+    </div>
+
+
+
+    <section class="dh-page-hero">
+
+      <div class="dh-container">
+
+        <span class="dh-section-label">
+          Моє замовлення
+        </span>
+
+
+        <h1>
+          Кошик
+        </h1>
+
+
+        <p>
+
+          Товари з різними датами
+          отримання будуть показані
+          окремими групами.
+
+        </p>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ====================================================
+         КОШИК + ПІДСУМОК
+         ==================================================== -->
+
+    <section class="dh-section">
+
+      <div class="dh-container dh-cart-layout">
+
+
+        <!-- ТОВАРИ -->
+
+        <div id="cartItems">
+
+          <div class="dh-loading">
+            Завантажуємо кошик…
+          </div>
+
+        </div>
+
+
+
+        <!-- ПРАВА КОЛОНКА -->
+
+        <aside class="dh-summary-card">
+
+          <span class="dh-section-label">
+            Разом
+          </span>
+
+
+          <h2>
+            Ваше замовлення
+          </h2>
+
+
+          <div class="dh-summary-row">
+
+            <span>
+              Товари
+            </span>
+
+            <strong id="cartTotal">
+              ≈ 0 грн
+            </strong>
+
+          </div>
+
+
+          <div class="dh-summary-row dh-summary-total">
+
+            <span>
+              Орієнтовна сума
+            </span>
+
+            <strong id="cartTotalDuplicate">
+              ≈ 0 грн
+            </strong>
+
+          </div>
+
+
+          <p class="dh-muted">
+
+            Для вагових товарів
+            остаточна сума буде відома
+            після фактичного зважування.
+
+          </p>
+
+
+          <button
+            type="button"
+            class="dh-primary-btn dh-wide"
+            id="checkoutButton"
+            onclick="location.href='checkout.html'"
+          >
+            Оформити замовлення
+          </button>
+
+
+          <a
+            href="catalog.html"
+            class="dh-secondary-btn dh-wide"
+            style="margin-top:10px;"
+          >
+            Продовжити покупки
+          </a>
+
+        </aside>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ====================================================
+         ПОЯСНЕННЯ
+         ==================================================== -->
+
+    <section
+      class="dh-section dh-section-soft"
+    >
+
+      <div class="dh-container">
+
+        <div class="dh-benefits-grid">
+
+
+          <article class="dh-benefit-card">
+
+            <span>
+              📅
+            </span>
+
+
+            <h3>
+              Різні дати
+            </h3>
+
+
+            <p>
+
+              Якщо риба, м’ясо
+              та випічка мають
+              різні дати отримання,
+              вони будуть розділені
+              в кошику.
+
+            </p>
+
+          </article>
+
+
+
+          <article class="dh-benefit-card">
+
+            <span>
+              ⚖️
+            </span>
+
+
+            <h3>
+              Вагові товари
+            </h3>
+
+
+            <p>
+
+              Сума для товарів
+              із фактичною вагою
+              показується орієнтовно.
+
+            </p>
+
+          </article>
+
+
+
+          <article class="dh-benefit-card">
+
+            <span>
+              💳
+            </span>
+
+
+            <h3>
+              Оплата
+            </h3>
+
+
+            <p>
+
+              Поки що оплата
+              відбувається
+              у магазині
+              під час самовивозу.
+
+            </p>
+
+          </article>
+
+
+
+          <article class="dh-benefit-card">
+
+            <span>
+              📞
+            </span>
+
+
+            <h3>
+              Підтвердження
+            </h3>
+
+
+            <p>
+
+              Після оформлення
+              магазин підтвердить
+              замовлення
+              за вашим номером телефону.
+
+            </p>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+
+  <!-- ======================================================
+       FOOTER
+       ====================================================== -->
+
+  <footer class="dh-footer">
+
+    <div class="dh-container dh-footer-grid">
+
+
+      <div class="dh-footer-brand">
+
+        <a
+          href="index.html"
+          class="dh-brand dh-brand-footer"
+        >
+
+          <span class="dh-brand-mark">
+            ДГ
+          </span>
+
+          <span class="dh-brand-text">
+
+            <strong data-store-name>
+              Добрий господар
+            </strong>
+
+            <small>
+              Магазин «Господар»
+            </small>
+
+          </span>
+
+        </a>
+
+
+        <p>
+
+          Замовляйте товари
+          завчасно та забирайте
+          готове замовлення
+          у магазині.
+
+        </p>
+
+      </div>
+
+
+
+      <div class="dh-footer-column">
+
+        <strong>
+          Покупцям
+        </strong>
+
+        <a href="catalog.html">
+          Каталог
+        </a>
+
+        <a href="how-to-order.html">
+          Як замовити
+        </a>
+
+        <a href="cart.html">
+          Кошик
+        </a>
+
+        <a href="account.html">
+          Мій кабінет
+        </a>
+
+      </div>
+
+
+
+      <div class="dh-footer-column">
+
+        <strong>
+          Інформація
+        </strong>
+
+        <a href="about.html">
+          Про нас
+        </a>
+
+        <a href="contacts.html">
+          Контакти
+        </a>
+
+        <a href="contacts.html">
+          Як нас знайти
+        </a>
+
+      </div>
+
+
+
+      <div class="dh-footer-column">
+
+        <strong>
+          Самовивіз
+        </strong>
+
+        <p data-store-address>
+          м. Снігурівка,
+          вул. В. Бойченка, 95
+        </p>
+
+        <a href="contacts.html">
+          Прокласти маршрут →
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <div class="dh-footer-bottom">
+
+      <div class="dh-container">
+
+        <span>
+          © <span id="currentYear"></span>
+          Добрий господар
+        </span>
+
+        <span>
+          Снігурівка
+        </span>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+
+  <!-- ======================================================
+       JAVASCRIPT
+       ====================================================== -->
+
+  <script src="app.js"></script>
+
+
+  <script>
+
+    const yearElement =
+      document.getElementById(
+        'currentYear'
+      );
+
+    if (yearElement) {
+      yearElement.textContent =
+        new Date().getFullYear();
+    }
+
+
+    /*
+     * app.js оновлює #cartTotal.
+     * Дублюємо його значення
+     * у великий підсумок.
+     */
+    const cartTotal =
+      document.getElementById(
+        'cartTotal'
+      );
+
+    const cartTotalDuplicate =
+      document.getElementById(
+        'cartTotalDuplicate'
+      );
+
+
+    if (
+      cartTotal &&
+      cartTotalDuplicate
+    ) {
+
+      const observer =
+        new MutationObserver(
+          () => {
+
+            cartTotalDuplicate.textContent =
+              cartTotal.textContent;
+
+          }
+        );
+
+
+      observer.observe(
+        cartTotal,
+        {
+          childList: true,
+          subtree: true,
+          characterData: true
+        }
+      );
+
+
+      cartTotalDuplicate.textContent =
+        cartTotal.textContent;
+    }
+
+
+    if (
+      'serviceWorker' in navigator
+    ) {
+
+      window.addEventListener(
+        'load',
+        () => {
+
+          navigator
+            .serviceWorker
+            .register(
+              'service-worker.js'
+            )
+            .catch(
+              (error) => {
+
+                console.log(
+                  'Service Worker:',
+                  error
+                );
+
+              }
+            );
+
+        }
+      );
+
+    }
+
+  </script>
+
+</body>
+</html>

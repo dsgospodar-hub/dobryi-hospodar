@@ -1,107 +1,1030 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#244a29">
-  <meta name="description" content="Добрий господар — замовлення товарів із самовивозом у Снігурівці.">
-  <title>Добрий господар — замовлення товарів</title>
-  <link rel="icon" href="assets/logo.png">
-  <link rel="apple-touch-icon" href="assets/logo.png">
-  <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Добрий господар — замовлення продуктів у Снігурівці
+  </title>
+
+  <meta
+    name="description"
+    content="Добрий господар у Снігурівці — м’ясо, риба, свіжа випічка, домашні напівфабрикати, корми та зерно. Замовляйте завчасно та забирайте в магазині."
+  >
+
+  <meta
+    name="theme-color"
+    content="#315f38"
+  >
+
+  <meta
+    name="robots"
+    content="index, follow"
+  >
+
+  <link
+    rel="manifest"
+    href="manifest.json"
+  >
+
+  <link
+    rel="stylesheet"
+    href="styles.css"
+  >
 </head>
-<body>
-<header class="site-header">
-  <a class="brand" href="#top"><img src="assets/logo.png" alt="Логотип"><span>Добрий господар</span></a>
-  <nav class="desktop-nav"><a href="#catalog">Каталог</a><a href="#how">Як замовити</a><a href="#about">Про нас</a><a href="#contacts">Контакти</a></nav>
-  <button id="cartButton" class="cart-button">Кошик <span id="cartCount">0</span></button>
-</header>
 
-<main id="top">
-  <section class="hero">
-    <img class="hero-image" src="assets/facade.jpg" alt="Фасад магазину">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <img class="hero-logo" src="assets/logo.png" alt="">
-      <p class="eyebrow">Магазин у Снігурівці</p>
-      <h1>Замовляйте потрібні товари заздалегідь</h1>
-      <p>Свіже м’ясо, заморожена риба, домашня випічка, напівфабрикати та крупи. Самовивіз із магазину, оплата при отриманні.</p>
-      <div class="hero-actions">
-        <a class="primary-button" href="#catalog">Перейти до каталогу</a>
-        <a class="secondary-button" href="https://maps.app.goo.gl/y5YqMkKVmLzNXz3v9" target="_blank">Прокласти маршрут</a>
+
+<body data-page="home">
+
+  <!-- ======================================================
+       ВЕРХНЯ ПАНЕЛЬ
+       ====================================================== -->
+
+  <header class="dh-header">
+
+    <div class="dh-header-inner">
+
+      <a
+        href="index.html"
+        class="dh-brand"
+        aria-label="Добрий господар — головна"
+      >
+
+        <span class="dh-brand-mark">
+          ДГ
+        </span>
+
+        <span class="dh-brand-text">
+
+          <strong data-store-name>
+            Добрий господар
+          </strong>
+
+          <small>
+            Снігурівка
+          </small>
+
+        </span>
+
+      </a>
+
+
+      <button
+        type="button"
+        class="dh-menu-button"
+        data-menu-toggle
+        aria-label="Відкрити меню"
+      >
+        ☰
+      </button>
+
+
+      <nav
+        class="dh-nav"
+        data-main-nav
+        aria-label="Головне меню"
+      >
+
+        <a
+          href="index.html"
+          class="is-active"
+        >
+          Головна
+        </a>
+
+        <a href="catalog.html">
+          Каталог
+        </a>
+
+        <a href="how-to-order.html">
+          Як замовити
+        </a>
+
+        <a href="about.html">
+          Про нас
+        </a>
+
+        <a href="contacts.html">
+          Контакти
+        </a>
+
+      </nav>
+
+
+      <div class="dh-header-actions">
+
+        <a
+          href="account.html"
+          class="dh-header-icon"
+          aria-label="Мій кабінет"
+          title="Мій кабінет"
+        >
+          👤
+        </a>
+
+
+        <a
+          href="cart.html"
+          class="dh-cart-button"
+          aria-label="Кошик"
+        >
+
+          <span>
+            🛒
+          </span>
+
+          <span class="dh-cart-text">
+            Кошик
+          </span>
+
+          <span
+            class="dh-cart-count"
+            data-cart-count
+            hidden
+          >
+            0
+          </span>
+
+        </a>
+
       </div>
+
     </div>
-  </section>
 
-  <section class="notice"><strong>Онлайн-оплати немає.</strong> Оплачуйте готівкою або карткою через термінал у магазині.</section>
+  </header>
 
-  <section id="catalog" class="section">
-    <div class="section-heading">
-      <div><p class="eyebrow">Попереднє замовлення</p><h2>Каталог товарів</h2></div>
-      <label class="search-box"><span class="sr-only">Пошук</span><input id="searchInput" type="search" placeholder="Знайти товар"></label>
+
+
+  <!-- ======================================================
+       ОСНОВНИЙ ВМІСТ
+       ====================================================== -->
+
+  <main id="pageError">
+
+
+    <!-- ====================================================
+         HERO
+         ==================================================== -->
+
+    <section class="dh-hero">
+
+      <div class="dh-container dh-hero-grid">
+
+        <div class="dh-hero-content">
+
+          <div class="dh-eyebrow">
+            Магазин «Господар» · Снігурівка
+          </div>
+
+
+          <h1>
+            Свіже — тоді,
+            <br>
+            коли ви його чекаєте
+          </h1>
+
+
+          <p class="dh-hero-lead">
+
+            Замовляйте м’ясо, рибу,
+            свіжу випічку, домашні
+            напівфабрикати, корми та зерно
+            завчасно.
+
+            Ми підготуємо ваше замовлення,
+            а ви заберете його в магазині
+            у погоджений день.
+
+          </p>
+
+
+          <div class="dh-hero-buttons">
+
+            <a
+              href="catalog.html"
+              class="dh-primary-btn"
+            >
+              Перейти до каталогу
+            </a>
+
+
+            <a
+              href="how-to-order.html"
+              class="dh-secondary-btn"
+            >
+              Як це працює
+            </a>
+
+          </div>
+
+
+          <div class="dh-hero-features">
+
+            <div>
+              <span>✓</span>
+              Актуальні ціни
+            </div>
+
+            <div>
+              <span>✓</span>
+              Дата отримання
+            </div>
+
+            <div>
+              <span>✓</span>
+              Самовивіз
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ПРАВА КАРТКА HERO -->
+
+        <aside class="dh-hero-card">
+
+          <div class="dh-hero-card-icon">
+            🛍️
+          </div>
+
+
+          <h2>
+            Замовте завчасно
+          </h2>
+
+
+          <p>
+
+            Не потрібно приїжджати
+            навмання.
+
+            Оберіть товар на сайті,
+            а ми підтвердимо ваше
+            замовлення та дату отримання.
+
+          </p>
+
+
+          <div class="dh-hero-card-row">
+
+            <span>
+              📍
+            </span>
+
+            <div>
+
+              <small>
+                Самовивіз
+              </small>
+
+              <strong data-store-address>
+                вул. В. Бойченка, 95
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <div class="dh-hero-card-row">
+
+            <span>
+              💳
+            </span>
+
+            <div>
+
+              <small>
+                Оплата
+              </small>
+
+              <strong>
+                При отриманні
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <a
+            href="contacts.html"
+            class="dh-outline-btn dh-wide"
+          >
+            Як нас знайти
+          </a>
+
+        </aside>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ====================================================
+         КАТЕГОРІЇ
+         ==================================================== -->
+
+    <section class="dh-section">
+
+      <div class="dh-container">
+
+        <div class="dh-section-heading">
+
+          <div>
+
+            <span class="dh-section-label">
+              Каталог
+            </span>
+
+            <h2>
+              Що можна замовити
+            </h2>
+
+            <p>
+              Оберіть потрібний розділ.
+            </p>
+
+          </div>
+
+
+          <a
+            href="catalog.html"
+            class="dh-text-link"
+          >
+            Увесь каталог →
+          </a>
+
+        </div>
+
+
+        <div
+          class="dh-category-grid"
+          id="categoryGrid"
+        >
+
+          <div class="dh-loading">
+            Завантажуємо категорії…
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ====================================================
+         ПОПУЛЯРНІ / ПЕРШІ ТОВАРИ
+         ==================================================== -->
+
+    <section
+      class="dh-section dh-section-soft"
+    >
+
+      <div class="dh-container">
+
+        <div class="dh-section-heading">
+
+          <div>
+
+            <span class="dh-section-label">
+              Замовляйте зараз
+            </span>
+
+            <h2>
+              Товари в каталозі
+            </h2>
+
+            <p>
+
+              Ціни, доступність
+              і дати отримання
+              завантажуються з нашої
+              Google-таблиці.
+
+            </p>
+
+          </div>
+
+
+          <a
+            href="catalog.html"
+            class="dh-text-link"
+          >
+            Переглянути всі →
+          </a>
+
+        </div>
+
+
+        <div
+          class="dh-product-grid"
+          id="productGrid"
+        >
+
+          <div class="dh-loading">
+            Завантажуємо товари…
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ====================================================
+         ЯК ЦЕ ПРАЦЮЄ
+         ==================================================== -->
+
+    <section class="dh-section">
+
+      <div class="dh-container">
+
+        <div class="dh-section-heading dh-centered">
+
+          <div>
+
+            <span class="dh-section-label">
+              Все просто
+            </span>
+
+            <h2>
+              Як зробити замовлення
+            </h2>
+
+          </div>
+
+        </div>
+
+
+        <div class="dh-steps-grid">
+
+
+          <article class="dh-step-card">
+
+            <div class="dh-step-number">
+              1
+            </div>
+
+            <div class="dh-step-icon">
+              🛒
+            </div>
+
+            <h3>
+              Оберіть товари
+            </h3>
+
+            <p>
+
+              Додайте потрібні товари
+              у кошик.
+
+              Для вагових товарів
+              можна залишити побажання.
+
+            </p>
+
+          </article>
+
+
+
+          <article class="dh-step-card">
+
+            <div class="dh-step-number">
+              2
+            </div>
+
+            <div class="dh-step-icon">
+              📞
+            </div>
+
+            <h3>
+              Ми підтвердимо
+            </h3>
+
+            <p>
+
+              Після оформлення
+              замовлення ми перевіримо
+              його та підтвердимо
+              за вашим номером телефону.
+
+            </p>
+
+          </article>
+
+
+
+          <article class="dh-step-card">
+
+            <div class="dh-step-number">
+              3
+            </div>
+
+            <div class="dh-step-icon">
+              🏪
+            </div>
+
+            <h3>
+              Заберіть у магазині
+            </h3>
+
+            <p>
+
+              Приходьте у погоджений
+              день та час.
+
+              Оплата — готівкою
+              або карткою через термінал.
+
+            </p>
+
+          </article>
+
+        </div>
+
+
+        <div class="dh-center-button">
+
+          <a
+            href="how-to-order.html"
+            class="dh-secondary-btn"
+          >
+            Детальніше про замовлення
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ====================================================
+         ПЕРЕДЗАМОВЛЕННЯ
+         ==================================================== -->
+
+    <section class="dh-section">
+
+      <div class="dh-container">
+
+        <div class="dh-preorder-banner">
+
+
+          <div class="dh-preorder-icon">
+            📅
+          </div>
+
+
+          <div class="dh-preorder-content">
+
+            <span class="dh-section-label">
+              Передзамовлення
+            </span>
+
+
+            <h2>
+              Плануйте покупки завчасно
+            </h2>
+
+
+            <p>
+
+              Для товарів під замовлення
+              сайт покаже найближчу
+              доступну дату отримання.
+
+              Після завершення прийому
+              замовлень на поточну
+              поставку система
+              автоматично покаже
+              наступну дату.
+
+            </p>
+
+          </div>
+
+
+          <a
+            href="catalog.html"
+            class="dh-primary-btn"
+          >
+            Обрати товари
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ====================================================
+         ЧОМУ ДОБРИЙ ГОСПОДАР
+         ==================================================== -->
+
+    <section
+      class="dh-section dh-section-soft"
+    >
+
+      <div class="dh-container">
+
+        <div class="dh-section-heading">
+
+          <div>
+
+            <span class="dh-section-label">
+              Добрий господар
+            </span>
+
+            <h2>
+              Купуйте зручніше
+            </h2>
+
+          </div>
+
+        </div>
+
+
+        <div class="dh-benefits-grid">
+
+
+          <article class="dh-benefit-card">
+
+            <span>
+              🥩
+            </span>
+
+            <h3>
+              Свіжі поставки
+            </h3>
+
+            <p>
+              Замовлення формуємо
+              відповідно до графіків
+              постачання.
+            </p>
+
+          </article>
+
+
+
+          <article class="dh-benefit-card">
+
+            <span>
+              ⚖️
+            </span>
+
+            <h3>
+              Врахуємо вагу
+            </h3>
+
+            <p>
+              Для вагових товарів
+              можна обрати:
+              трохи менше,
+              трохи більше
+              або найближчу вагу.
+            </p>
+
+          </article>
+
+
+
+          <article class="dh-benefit-card">
+
+            <span>
+              💬
+            </span>
+
+            <h3>
+              Ваші побажання
+            </h3>
+
+            <p>
+              Напишіть, наприклад:
+              дві менші рибини,
+              не розрізати
+              або м’ясо одним шматком.
+            </p>
+
+          </article>
+
+
+
+          <article class="dh-benefit-card">
+
+            <span>
+              💚
+            </span>
+
+            <h3>
+              Місцевий магазин
+            </h3>
+
+            <p>
+              Замовлення забираєте
+              безпосередньо
+              у магазині «Господар»
+              у Снігурівці.
+            </p>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ====================================================
+         КОНТАКТИ НА ГОЛОВНІЙ
+         ==================================================== -->
+
+    <section class="dh-section">
+
+      <div class="dh-container">
+
+        <div class="dh-home-contact">
+
+          <div>
+
+            <span class="dh-section-label">
+              Магазин «Господар»
+            </span>
+
+
+            <h2>
+              Будемо раді вас бачити
+            </h2>
+
+
+            <p class="dh-home-address">
+
+              📍
+
+              <span data-store-address>
+                м. Снігурівка,
+                вул. В. Бойченка, 95
+              </span>
+
+            </p>
+
+
+            <p>
+
+              Замовляйте на сайті,
+              а забирайте готове
+              замовлення у магазині.
+
+            </p>
+
+          </div>
+
+
+          <div class="dh-home-contact-buttons">
+
+            <a
+              href="contacts.html"
+              class="dh-primary-btn"
+            >
+              Контакти та карта
+            </a>
+
+
+            <a
+              href="catalog.html"
+              class="dh-secondary-btn"
+            >
+              До каталогу
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+
+  <!-- ======================================================
+       НИЖНЯ ЧАСТИНА
+       ====================================================== -->
+
+  <footer class="dh-footer">
+
+    <div class="dh-container dh-footer-grid">
+
+
+      <div class="dh-footer-brand">
+
+        <a
+          href="index.html"
+          class="dh-brand dh-brand-footer"
+        >
+
+          <span class="dh-brand-mark">
+            ДГ
+          </span>
+
+          <span class="dh-brand-text">
+
+            <strong data-store-name>
+              Добрий господар
+            </strong>
+
+            <small>
+              Магазин «Господар»
+            </small>
+
+          </span>
+
+        </a>
+
+
+        <p>
+
+          Продукти,
+          домашні напівфабрикати,
+          свіжа випічка,
+          корми та товари
+          для господарства.
+
+        </p>
+
+      </div>
+
+
+
+      <div class="dh-footer-column">
+
+        <strong>
+          Покупцям
+        </strong>
+
+        <a href="catalog.html">
+          Каталог
+        </a>
+
+        <a href="how-to-order.html">
+          Як замовити
+        </a>
+
+        <a href="cart.html">
+          Кошик
+        </a>
+
+        <a href="account.html">
+          Мій кабінет
+        </a>
+
+      </div>
+
+
+
+      <div class="dh-footer-column">
+
+        <strong>
+          Про нас
+        </strong>
+
+        <a href="about.html">
+          Добрий господар
+        </a>
+
+        <a href="contacts.html">
+          Контакти
+        </a>
+
+        <a href="contacts.html">
+          Як нас знайти
+        </a>
+
+      </div>
+
+
+
+      <div class="dh-footer-column">
+
+        <strong>
+          Самовивіз
+        </strong>
+
+        <p data-store-address>
+          м. Снігурівка,
+          вул. В. Бойченка, 95
+        </p>
+
+        <a href="contacts.html">
+          Прокласти маршрут →
+        </a>
+
+      </div>
+
     </div>
-    <div id="categoryFilters" class="category-filters"></div>
-    <div id="catalogStatus" class="catalog-status">Завантажуємо каталог…</div>
-    <div id="productGrid" class="product-grid"></div>
-  </section>
 
-  <section id="how" class="section soft-section">
-    <div class="section-heading"><div><p class="eyebrow">Просто і зручно</p><h2>Як зробити замовлення</h2></div></div>
-    <div class="steps">
-      <article><span>1</span><h3>Оберіть товари</h3><p>Додайте потрібну кількість у кошик.</p></article>
-      <article><span>2</span><h3>Вкажіть дату</h3><p>Оберіть дату і час отримання.</p></article>
-      <article><span>3</span><h3>Отримайте підтвердження</h3><p>Працівник магазину перевірить замовлення.</p></article>
-      <article><span>4</span><h3>Заберіть і оплатіть</h3><p>Оплатіть у магазині готівкою або карткою.</p></article>
+
+    <div class="dh-footer-bottom">
+
+      <div class="dh-container">
+
+        <span>
+          © <span id="currentYear"></span>
+          Добрий господар
+        </span>
+
+        <span>
+          Снігурівка
+        </span>
+
+      </div>
+
     </div>
-  </section>
 
-  <section id="about" class="section">
-    <div class="about-grid">
-      <div><p class="eyebrow">Свої люди — свої продукти</p><h2>Готуємо і працюємо для нашої громади</h2><p>Основні товари можна замовити заздалегідь, а решту покупок — зробити у магазині.</p></div>
-      <div class="photo-collage"><img src="assets/team.jpg" alt="Працівники"><img src="assets/baking-1.jpg" alt="Випікання"><img src="assets/freezing.jpg" alt="Заморожування"></div>
-    </div>
-  </section>
+  </footer>
 
-  <section id="contacts" class="section contact-section">
-    <div><p class="eyebrow">Самовивіз</p><h2>Контакти магазину</h2><p><strong>Адреса:</strong> м. Снігурівка, Миколаївська область, вул. В. Бойченка, 95</p></div>
-    <div class="contact-links">
-      <a href="https://t.me/gospodarsng" target="_blank">Telegram</a>
-      <a href="https://maps.app.goo.gl/y5YqMkKVmLzNXz3v9" target="_blank">Google Maps</a>
-      <a href="https://www.facebook.com/profile.php?id=61590557807294" target="_blank">Facebook</a>
-      <a href="https://www.instagram.com/d.s.gospodar/" target="_blank">Instagram</a>
-    </div>
-  </section>
-</main>
 
-<footer><img src="assets/logo.png" alt=""><div><strong>Добрий господар</strong><p>Попереднє замовлення товарів із самовивозом.</p></div></footer>
 
-<dialog id="productDialog" class="product-dialog"><button class="dialog-close" data-close-dialog>×</button><div id="productDialogContent"></div></dialog>
+  <!-- ======================================================
+       JAVASCRIPT
+       ====================================================== -->
 
-<aside id="cartDrawer" class="cart-drawer" aria-hidden="true">
-  <div class="cart-header"><h2>Ваше замовлення</h2><button id="closeCartButton">×</button></div>
-  <div id="cartItems" class="cart-items"></div>
-  <div class="cart-summary"><div><span>Разом</span><strong id="cartTotal">0 грн</strong></div><p>Для вагових товарів остаточна сума може змінитися після зважування.</p><button id="checkoutButton" class="primary-button full-width">Оформити замовлення</button></div>
-</aside>
-<div id="drawerBackdrop" class="drawer-backdrop"></div>
+  <script src="app.js"></script>
 
-<dialog id="checkoutDialog" class="checkout-dialog">
-  <button class="dialog-close" data-close-checkout>×</button>
-  <h2>Оформлення замовлення</h2>
-  <form id="checkoutForm">
-    <label>Ім’я<input name="customerName" required></label>
-    <label>Телефон<input name="phone" required inputmode="tel" placeholder="0XX XXX XX XX"></label>
-    <div class="form-row">
-      <label>Дата забору<input id="pickupDate" name="pickupDate" type="date" required></label>
-      <label>Час забору<select name="pickupTime" required><option value="">Оберіть час</option><option>08:00–10:00</option><option>10:00–12:00</option><option>12:00–15:00</option><option>15:00–17:00</option><option>17:00–19:00</option></select></label>
-    </div>
-    <label>Спосіб оплати<select name="paymentMethod" required><option>Готівка</option><option>Картка через термінал</option></select></label>
-    <label>Коментар<textarea name="comment" rows="3"></textarea></label>
-    <label class="consent"><input type="checkbox" required> Погоджуюсь на обробку даних для виконання замовлення.</label>
-    <div id="checkoutStatus" class="checkout-status"></div>
-    <button class="primary-button full-width" type="submit">Надіслати замовлення</button>
-  </form>
-</dialog>
-<script src="app.js"></script>
+
+  <script>
+
+    /*
+     * Поточний рік у футері.
+     */
+    const yearElement =
+      document.getElementById(
+        'currentYear'
+      );
+
+    if (yearElement) {
+      yearElement.textContent =
+        new Date().getFullYear();
+    }
+
+
+    /*
+     * PWA / Service Worker.
+     *
+     * Якщо service-worker.js уже є
+     * у репозиторії — залишаємо
+     * можливість встановлювати сайт
+     * на телефон.
+     */
+    if (
+      'serviceWorker' in navigator
+    ) {
+
+      window.addEventListener(
+        'load',
+        () => {
+
+          navigator
+            .serviceWorker
+            .register(
+              'service-worker.js'
+            )
+            .catch(
+              (error) => {
+
+                console.log(
+                  'Service Worker:',
+                  error
+                );
+
+              }
+            );
+
+        }
+      );
+
+    }
+
+  </script>
+
 </body>
 </html>

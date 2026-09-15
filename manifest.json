@@ -1,21 +1,37 @@
 {
-  "name": "Добрий господар",
-  "short_name": "Добрий господар",
-  "start_url": "./",
+  "id": "./",
+  "name": "Добрий го:contentReference[oaicite:0]{index=0}": "Господар",
+  "description": "Замовлення продуктів, м’яса, риби, випічки, напівфабрикатів, кормів та зерна у Снігурівці.",
+  "lang": "uk",
+  "dir": "ltr",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#fcfaf4",
-  "theme_color": "#244a29",
-  "description": "Попереднє замовлення товарів із самовивозом у магазині.",
-  "icons": [
+  "orientation": "any",
+  "background_color": "#f7f5ef",
+  "theme_color": "#315f38",
+  "categories": [
+    "shopping",
+    "food"
+  ],
+  "shortcuts": [
     {
-      "src": "assets/logo.png",
-      "sizes": "192x192",
-      "type": "image/png"
+      "name": "Каталог",
+      "short_name": "Каталог",
+      "description": "Переглянути товари",
+      "url": "./catalog.html"
     },
     {
-      "src": "assets/logo.png",
-      "sizes": "512x512",
-      "type": "image/png"
+      "name": "Кошик",
+      "short_name": "Кошик",
+      "description": "Переглянути замовлення",
+      "url": "./cart.html"
+    },
+    {
+      "name": "Контакти",
+      "short_name": "Контакти",
+      "description": "Адреса та контакти магазину",
+      "url": "./contacts.html"
     }
   ]
 }

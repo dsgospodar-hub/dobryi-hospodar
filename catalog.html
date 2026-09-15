@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Каталог — Добрий господар
+  </title>
+
+  <meta
+    name="description"
+    content="Каталог магазину Добрий господар у Снігурівці: м’ясо, риба та морепродукти, свіжа випічка, домашні напівфабрикати, корми та зерно."
+  >
+
+  <meta
+    name="theme-color"
+    content="#315f38"
+  >
+
+  <link
+    rel="manifest"
+    href="manifest.json"
+  >
+
+  <link
+    rel="stylesheet"
+    href="styles.css"
+  >
+</head>
+
+
+<body data-page="catalog">
+
+  <!-- ======================================================
+       ШАПКА
+       ====================================================== -->
+
+  <header class="dh-header">
+
+    <div class="dh-header-inner">
+
+      <a
+        href="index.html"
+        class="dh-brand"
+        aria-label="Добрий господар — головна"
+      >
+
+        <span class="dh-brand-mark">
+          ДГ
+        </span>
+
+        <span class="dh-brand-text">
+
+          <strong data-store-name>
+            Добрий господар
+          </strong>
+
+          <small>
+            Снігурівка
+          </small>
+
+        </span>
+
+      </a>
+
+
+      <button
+        type="button"
+        class="dh-menu-button"
+        data-menu-toggle
+        aria-label="Відкрити меню"
+      >
+        ☰
+      </button>
+
+
+      <nav
+        class="dh-nav"
+        data-main-nav
+        aria-label="Головне меню"
+      >
+
+        <a href="index.html">
+          Головна
+        </a>
+
+        <a
+          href="catalog.html"
+          class="is-active"
+        >
+          Каталог
+        </a>
+
+        <a href="how-to-order.html">
+          Як замовити
+        </a>
+
+        <a href="about.html">
+          Про нас
+        </a>
+
+        <a href="contacts.html">
+          Контакти
+        </a>
+
+      </nav>
+
+
+      <div class="dh-header-actions">
+
+        <a
+          href="account.html"
+          class="dh-header-icon"
+          aria-label="Мій кабінет"
+          title="Мій кабінет"
+        >
+          👤
+        </a>
+
+
+        <a
+          href="cart.html"
+          class="dh-cart-button"
+          aria-label="Кошик"
+        >
+
+          <span>
+            🛒
+          </span>
+
+          <span class="dh-cart-text">
+            Кошик
+          </span>
+
+          <span
+            class="dh-cart-count"
+            data-cart-count
+            hidden
+          >
+            0
+          </span>
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- ======================================================
+       ОСНОВНИЙ ВМІСТ
+       ====================================================== -->
+
+  <main id="pageError">
+
+
+    <!-- ХЛІБНІ КРИХТИ -->
+
+    <div class="dh-container dh-breadcrumbs">
+
+      <a href="index.html">
+        Головна
+      </a>
+
+      <span>
+        →
+      </span>
+
+      <span>
+        Каталог
+      </span>
+
+    </div>
+
+
+
+    <!-- ====================================================
+         ЗАГОЛОВОК
+         ==================================================== -->
+
+    <section class="dh-page-hero">
+
+      <div class="dh-container">
+
+        <span class="dh-section-label">
+          Добрий господар
+        </span>
+
+
+        <h1>
+          Каталог
+        </h1>
+
+
+        <p>
+
+          Оберіть потрібну категорію
+          або перегляньте всі товари,
+          які зараз доступні
+          для замовлення на сайті.
+
+        </p>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ====================================================
+         КАТЕГОРІЇ
+         ==================================================== -->
+
+    <section class="dh-section">
+
+      <div class="dh-container">
+
+        <div class="dh-section-heading">
+
+          <div>
+
+            <span class="dh-section-label">
+              Розділи
+            </span>
+
+
+            <h2>
+              Оберіть категорію
+            </h2>
+
+
+            <p>
+
+              М’ясо, риба,
+              випічка, напівфабрикати,
+              корми та зерно.
+
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div
+          class="dh-category-grid"
+          id="categoryGrid"
+        >
+
+          <div class="dh-loading">
+            Завантажуємо категорії…
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ====================================================
+         ВСІ ТОВАРИ
+         ==================================================== -->
+
+    <section
+      class="dh-section dh-section-soft"
+    >
+
+      <div class="dh-container">
+
+        <div class="dh-section-heading">
+
+          <div>
+
+            <span class="dh-section-label">
+              Усі товари
+            </span>
+
+
+            <h2>
+              Доступно для замовлення
+            </h2>
+
+
+            <p>
+
+              Тут показуються тільки ті
+              позиції, для яких у таблиці
+              увімкнено
+              «Показувати на сайті».
+
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div
+          class="dh-product-grid"
+          id="productGrid"
+        >
+
+          <div class="dh-loading">
+            Завантажуємо каталог…
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ====================================================
+         ПОЯСНЕННЯ ЦІНИ
+         ==================================================== -->
+
+    <section class="dh-section">
+
+      <div class="dh-container">
+
+        <div class="dh-preorder-banner">
+
+          <div class="dh-preorder-icon">
+            💚
+          </div>
+
+
+          <div class="dh-preorder-content">
+
+            <span class="dh-section-label">
+              Ціни на сайті
+            </span>
+
+
+            <h2>
+              На окремі товари ціна може бути нижчою
+            </h2>
+
+
+            <p>
+
+              Якщо для певного товару
+              діє спеціальна ціна
+              при замовленні через сайт,
+              ви побачите звичайну
+              магазинну ціну
+              та окремо ціну на сайті.
+
+              Така знижка
+              вмикається для кожного
+              товару окремо.
+
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ====================================================
+         ВАГОВІ ТОВАРИ
+         ==================================================== -->
+
+    <section
+      class="dh-section dh-section-soft"
+    >
+
+      <div class="dh-container">
+
+        <div class="dh-section-heading">
+
+          <div>
+
+            <span class="dh-section-label">
+              Важливо
+            </span>
+
+
+            <h2>
+              Про вагові товари
+            </h2>
+
+          </div>
+
+        </div>
+
+
+        <div class="dh-benefits-grid">
+
+
+          <article class="dh-benefit-card">
+
+            <span>
+              ⚖️
+            </span>
+
+
+            <h3>
+              Приблизна вага
+            </h3>
+
+
+            <p>
+
+              Для м’яса та інших
+              вагових позицій
+              фактична вага може
+              трохи відрізнятися
+              від замовленої.
+
+            </p>
+
+          </article>
+
+
+
+          <article class="dh-benefit-card">
+
+            <span>
+              ↕️
+            </span>
+
+
+            <h3>
+              Менше або більше
+            </h3>
+
+
+            <p>
+
+              Якщо товар неможливо
+              зважити абсолютно точно,
+              ви можете вказати:
+              краще трохи менше,
+              більше
+              або найближчу вагу.
+
+            </p>
+
+          </article>
+
+
+
+          <article class="dh-benefit-card">
+
+            <span>
+              🐟
+            </span>
+
+
+            <h3>
+              Цілі тушки
+            </h3>
+
+
+            <p>
+
+              Товари на кшталт
+              цілої риби
+              не будемо штучно
+              розрізати заради
+              точної ваги.
+
+            </p>
+
+          </article>
+
+
+
+          <article class="dh-benefit-card">
+
+            <span>
+              📝
+            </span>
+
+
+            <h3>
+              Ваше побажання
+            </h3>
+
+
+            <p>
+
+              До окремого товару
+              можна написати:
+              бажаний розмір,
+              кількість шматків,
+              фасування
+              або інше побажання.
+
+            </p>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+
+  <!-- ======================================================
+       FOOTER
+       ====================================================== -->
+
+  <footer class="dh-footer">
+
+    <div class="dh-container dh-footer-grid">
+
+
+      <div class="dh-footer-brand">
+
+        <a
+          href="index.html"
+          class="dh-brand dh-brand-footer"
+        >
+
+          <span class="dh-brand-mark">
+            ДГ
+          </span>
+
+          <span class="dh-brand-text">
+
+            <strong data-store-name>
+              Добрий господар
+            </strong>
+
+            <small>
+              Магазин «Господар»
+            </small>
+
+          </span>
+
+        </a>
+
+
+        <p>
+
+          Замовляйте товари
+          завчасно та забирайте
+          готове замовлення
+          у магазині.
+
+        </p>
+
+      </div>
+
+
+
+      <div class="dh-footer-column">
+
+        <strong>
+          Покупцям
+        </strong>
+
+        <a href="catalog.html">
+          Каталог
+        </a>
+
+        <a href="how-to-order.html">
+          Як замовити
+        </a>
+
+        <a href="cart.html">
+          Кошик
+        </a>
+
+        <a href="account.html">
+          Мій кабінет
+        </a>
+
+      </div>
+
+
+
+      <div class="dh-footer-column">
+
+        <strong>
+          Інформація
+        </strong>
+
+        <a href="about.html">
+          Про нас
+        </a>
+
+        <a href="contacts.html">
+          Контакти
+        </a>
+
+        <a href="contacts.html">
+          Як нас знайти
+        </a>
+
+      </div>
+
+
+
+      <div class="dh-footer-column">
+
+        <strong>
+          Самовивіз
+        </strong>
+
+        <p data-store-address>
+          м. Снігурівка,
+          вул. В. Бойченка, 95
+        </p>
+
+        <a href="contacts.html">
+          Прокласти маршрут →
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <div class="dh-footer-bottom">
+
+      <div class="dh-container">
+
+        <span>
+          © <span id="currentYear"></span>
+          Добрий господар
+        </span>
+
+        <span>
+          Снігурівка
+        </span>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+
+  <!-- ======================================================
+       JAVASCRIPT
+       ====================================================== -->
+
+  <script src="app.js"></script>
+
+
+  <script>
+
+    const yearElement =
+      document.getElementById(
+        'currentYear'
+      );
+
+    if (yearElement) {
+      yearElement.textContent =
+        new Date().getFullYear();
+    }
+
+
+    if (
+      'serviceWorker' in navigator
+    ) {
+
+      window.addEventListener(
+        'load',
+        () => {
+
+          navigator
+            .serviceWorker
+            .register(
+              'service-worker.js'
+            )
+            .catch(
+              (error) => {
+
+                console.log(
+                  'Service Worker:',
+                  error
+                );
+
+              }
+            );
+
+        }
+      );
+
+    }
+
+  </script>
+
+</body>
+</html>

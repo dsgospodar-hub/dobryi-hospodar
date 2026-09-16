@@ -4,29 +4,38 @@
   const API_URL =
     'https://script.google.com/macros/s/AKfycbytW-z1l2ZzhOjbgpJrknNiRb-KnwS0gE1KERnvVMux37g4YGbWgJpYuj53heuthsJi/exec';
 
-  const STORAGE = Object.freeze({
-    CART: 'dh_cart_v2',
-    CUSTOMER: 'dh_customer_v2',
-    LAST_ORDER: 'dh_last_order_v2'
-  });
+  const STORE_CACHE_TTL =
+    5 * 60 * 1000;
 
-  const CATEGORY_ICONS = Object.freeze({
-    meat: '🥩',
-    fish: '🐟',
-    bakery: '🥐',
-    semi: '🥟',
-    feed: '🌾'
-  });
+  const STORAGE =
+    Object.freeze({
+      CART: 'dh_cart_v2',
+      CUSTOMER: 'dh_customer_v2',
+      LAST_ORDER: 'dh_last_order_v2',
+      STORE_CACHE: 'dh_store_cache_v1'
+    });
+
+  const CATEGORY_ICONS =
+    Object.freeze({
+      meat: '🥩',
+      fish: '🐟',
+      bakery: '🥐',
+      semi: '🥟',
+      feed: '🌾'
+    });
 
   const state = {
     store: null,
     products: [],
     categories: [],
     settings: {},
-    cart: loadJson_(
-      STORAGE.CART,
-      []
-    ),
+
+    cart:
+      loadJson_(
+        STORAGE.CART,
+        []
+      ),
+
     activeProduct: null,
     submitting: false
   };
@@ -46,17 +55,75 @@
 
     bindGlobalUi_();
 
+    cleanPublicCopy_();
+
+    hideAccountUi_();
+
     updateCartBadge_();
 
 
+    /*
+     * Кабінет покупця поки
+     * не показуємо.
+     */
+    if (
+      document.body.dataset.page ===
+      'account'
+    ) {
+
+      location.replace(
+        'catalog.html'
+      );
+
+      return;
+    }
+
+
+    /*
+     * Спочатку пробуємо
+     * показати останні дані
+     * з локального кешу.
+     */
+    const cachedStore =
+      loadStoreCache_();
+
+
+    let renderedFromCache =
+      false;
+
+
+    if (cachedStore) {
+
+      applyStoreData_(
+        cachedStore
+      );
+
+      normalizeCart_();
+
+      applySettings_();
+
+      initAnalytics_();
+
+      renderCurrentPage_();
+
+
+      renderedFromCache =
+        true;
+    }
+
+
+    /*
+     * Паралельно отримуємо
+     * свіжі дані від API.
+     *
+     * nocache=1 більше
+     * НЕ використовуємо.
+     */
     try {
 
       const response =
         await jsonp_(
-          {
-            action: 'store',
-            nocache: '1'
-          },
+          buildStoreRequestParams_(),
           15000
         );
 
@@ -76,35 +143,40 @@
       }
 
 
-      state.store =
-        response.data;
-
-      state.settings =
-        response.data.settings ||
-        {};
-
-      state.categories =
-        Array.isArray(
-          response.data.categories
-        )
-          ? response.data.categories
-          : [];
-
-      state.products =
-        Array.isArray(
-          response.data.products
-        )
-          ? response.data.products
-          : [];
+      saveStoreCache_(
+        response.data
+      );
 
 
-      normalizeCart_();
+      applyStoreData_(
+        response.data
+      );
 
-      applySettings_();
 
-      initAnalytics_();
+      /*
+       * Якщо кешу не було —
+       * рендеримо сторінку зараз.
+       *
+       * Якщо кеш був —
+       * сторінка вже відкрита,
+       * тому не перевішуємо
+       * всі події вдруге.
+       */
+      if (!renderedFromCache) {
 
-      renderCurrentPage_();
+        normalizeCart_();
+
+        applySettings_();
+
+        initAnalytics_();
+
+        renderCurrentPage_();
+
+      } else {
+
+        applySettings_();
+      }
+
 
     } catch (error) {
 
@@ -113,11 +185,146 @@
       );
 
 
-      showPageError_(
-        error.message ||
-        'Не вдалося завантажити сайт. Оновіть сторінку.'
-      );
+      /*
+       * Якщо сторінка вже
+       * відкрилася з кешу,
+       * не лякаємо покупця
+       * технічною помилкою.
+       */
+      if (!renderedFromCache) {
+
+        showPageError_(
+          error.message ||
+          'Не вдалося завантажити сайт. Оновіть сторінку.'
+        );
+      }
     }
+  }
+
+
+  function applyStoreData_(
+    data
+  ) {
+
+    state.store =
+      data || {};
+
+
+    state.settings =
+      data &&
+      data.settings
+        ? data.settings
+        : {};
+
+
+    state.categories =
+      data &&
+      Array.isArray(
+        data.categories
+      )
+        ? data.categories
+        : [];
+
+
+    state.products =
+      data &&
+      Array.isArray(
+        data.products
+      )
+        ? data.products
+        : [];
+  }
+
+
+  function buildStoreRequestParams_() {
+
+    return {
+      action: 'store'
+    };
+  }
+
+
+  /* ======================================================
+     STORE CACHE
+     ====================================================== */
+
+  function loadStoreCache_() {
+
+    const entry =
+      loadJson_(
+        STORAGE.STORE_CACHE,
+        null
+      );
+
+
+    if (
+      !isStoreCacheFresh_(
+        entry,
+        Date.now(),
+        STORE_CACHE_TTL
+      )
+    ) {
+
+      return null;
+    }
+
+
+    return entry.data;
+  }
+
+
+  function saveStoreCache_(
+    data
+  ) {
+
+    try {
+
+      localStorage.setItem(
+        STORAGE.STORE_CACHE,
+
+        JSON.stringify({
+          savedAt:
+            Date.now(),
+
+          data:
+            data
+        })
+      );
+
+    } catch (_) {
+    }
+  }
+
+
+  function isStoreCacheFresh_(
+    entry,
+    now,
+    ttl
+  ) {
+
+    return !!(
+      entry &&
+
+      Number.isFinite(
+        Number(
+          entry.savedAt
+        )
+      ) &&
+
+      now -
+        Number(
+          entry.savedAt
+        ) >=
+        0 &&
+
+      now -
+        Number(
+          entry.savedAt
+        ) <=
+        ttl &&
+
+      entry.data
+    );
   }
 
 
@@ -131,6 +338,7 @@
       document.querySelector(
         '[data-menu-toggle]'
       );
+
 
     const nav =
       document.querySelector(
@@ -174,6 +382,277 @@
   }
 
 
+  /*
+   * Кабінет поки не працює,
+   * тому всі посилання
+   * account.html приховуємо.
+   */
+  function hideAccountUi_() {
+
+    document
+      .querySelectorAll(
+        'a[href="account.html"], a[href$="/account.html"], a[href^="account.html?"]'
+      )
+      .forEach(
+        el => {
+
+          el.hidden =
+            true;
+
+          el.style.display =
+            'none';
+        }
+      );
+  }
+
+
+  /* ======================================================
+     ПРИБИРАЄМО ТЕХНІЧНІ ТЕКСТИ
+     ====================================================== */
+
+  function cleanPublicCopy_() {
+
+    const replacements = [
+
+      [
+        'Ціни, доступність і дати отримання завантажуються з нашої Google-таблиці.',
+        'Актуальні ціни, наявність і найближчі дати отримання.'
+      ],
+
+      [
+        'Актуальна інформація про товар береться безпосередньо з робочої таблиці магазину.',
+        'На сайті ви бачите актуальні ціни та доступність товарів.'
+      ],
+
+      [
+        'Якщо для певного товару діє спеціальна ціна при замовленні через сайт, ви побачите звичайну магазинну ціну та окремо ціну на сайті. Така знижка вмикається для кожного товару окремо.',
+        'При замовленні на сайті окремі товари можуть коштувати дешевше, ніж у магазині. Якщо для товару діє спеціальна ціна — ви побачите її на картці товару.'
+      ],
+
+      [
+        'Оплата при отриманні',
+        'Способи оплати'
+      ]
+    ];
+
+
+    replacements.forEach(
+      ([from, to]) => {
+
+        replaceTextEverywhere_(
+          from,
+          to
+        );
+      }
+    );
+
+
+    simplifyPaymentCards_();
+
+
+    removeCompactBlockContaining_(
+      'Доставка додому поки вимкнена'
+    );
+
+
+    removeCompactBlockContaining_(
+      'Доставку підключимо пізніше'
+    );
+  }
+
+
+  function replaceTextEverywhere_(
+    from,
+    to
+  ) {
+
+    if (!document.body) {
+      return;
+    }
+
+
+    const walker =
+      document.createTreeWalker(
+        document.body,
+        NodeFilter.SHOW_TEXT
+      );
+
+
+    const nodes = [];
+
+    let node;
+
+
+    while (
+      (
+        node =
+          walker.nextNode()
+      )
+    ) {
+
+      if (
+        node.nodeValue &&
+        node.nodeValue.includes(
+          from
+        )
+      ) {
+
+        nodes.push(
+          node
+        );
+      }
+    }
+
+
+    nodes.forEach(
+      textNode => {
+
+        textNode.nodeValue =
+          textNode.nodeValue
+            .replace(
+              from,
+              to
+            );
+      }
+    );
+  }
+
+
+  /*
+   * У блоці оплати:
+   *
+   * - Готівка
+   * - Картка
+   * - Перерахування на рахунок ФОП
+   *
+   * Картку про майбутню
+   * доставку прибираємо.
+   */
+  function simplifyPaymentCards_() {
+
+    const cards = [
+      ...document.querySelectorAll(
+        'article, .dh-benefit-card, .dh-payment-card, .dh-info-card'
+      )
+    ];
+
+
+    cards.forEach(
+      card => {
+
+        const heading =
+          card.querySelector(
+            'h2, h3, h4'
+          );
+
+
+        if (!heading) {
+          return;
+        }
+
+
+        const title =
+          heading.textContent
+            .trim();
+
+
+        if (
+          title ===
+          'Без онлайн-оплати'
+        ) {
+
+          heading.textContent =
+            'Перерахування на рахунок ФОП';
+
+
+          const p =
+            card.querySelector(
+              'p'
+            );
+
+
+          if (p) {
+
+            p.textContent =
+              'За погодженням можна оплатити замовлення перерахуванням на рахунок ФОП.';
+          }
+
+
+          const icon =
+            card.querySelector(
+              'span'
+            );
+
+
+          if (icon) {
+
+            icon.textContent =
+              '🏦';
+          }
+        }
+
+
+        if (
+          title ===
+          'Доставка пізніше'
+        ) {
+
+          card.remove();
+        }
+      }
+    );
+  }
+
+
+  function removeCompactBlockContaining_(
+    needle
+  ) {
+
+    const matches = [
+      ...document.querySelectorAll(
+        'div, article, section'
+      )
+    ]
+      .filter(
+        el => {
+
+          const text =
+            el.textContent
+              .replace(
+                /\s+/g,
+                ' '
+              )
+              .trim();
+
+
+          return (
+            text.includes(
+              needle
+            ) &&
+
+            text.length <
+            700
+          );
+        }
+      )
+      .sort(
+        (a, b) =>
+          a.textContent.length -
+          b.textContent.length
+      );
+
+
+    if (matches[0]) {
+
+      matches[0].remove();
+    }
+  }
+
+
+  /* ======================================================
+     PAGE RENDER
+     ====================================================== */
+
   function renderCurrentPage_() {
 
     renderCategoryGrids_();
@@ -189,8 +668,6 @@
     renderSuccessPage_();
 
     renderContactsPage_();
-
-    renderAccountPage_();
   }
 
 
@@ -209,7 +686,7 @@
 
     const address =
       setting_(
-        'Сайт адреса',
+        'Адреса для сайту',
         'Адреса',
         'Адреса магазину'
       ) ||
@@ -244,13 +721,14 @@
 
     const phone =
       setting_(
-        'Телефон',
-        'Телефон магазину'
+        'Телефон магазину',
+        'Телефон'
       );
 
 
     const email =
       setting_(
+        'Email магазину',
         'Email',
         'E-mail',
         'Електронна пошта'
@@ -259,6 +737,7 @@
 
     const weekdays =
       setting_(
+        'Графік роботи Пн–Пт',
         'Графік Пн–Пт',
         'Пн–Пт',
         'Пн-Пт'
@@ -267,6 +746,7 @@
 
     const weekend =
       setting_(
+        'Графік роботи Сб–Нд',
         'Графік Сб–Нд',
         'Сб–Нд',
         'Сб-Нд'
@@ -281,6 +761,10 @@
         el => {
 
           if (!phone) {
+
+            el.hidden =
+              true;
+
             return;
           }
 
@@ -303,6 +787,10 @@
             phone;
 
 
+          el.hidden =
+            false;
+
+
           el.replaceChildren(
             a
           );
@@ -318,6 +806,10 @@
         el => {
 
           if (!email) {
+
+            el.hidden =
+              true;
+
             return;
           }
 
@@ -337,6 +829,10 @@
             email;
 
 
+          el.hidden =
+            false;
+
+
           el.replaceChildren(
             a
           );
@@ -352,6 +848,7 @@
         el => {
 
           if (weekdays) {
+
             el.textContent =
               weekdays;
           }
@@ -367,6 +864,7 @@
         el => {
 
           if (weekend) {
+
             el.textContent =
               weekend;
           }
@@ -376,6 +874,7 @@
 
     const route =
       setting_(
+        'Google Maps — посилання',
         'Google Maps',
         'Google Maps share link',
         'Посилання Google Maps'
@@ -393,6 +892,12 @@
 
             el.href =
               route;
+
+            el.target =
+              '_blank';
+
+            el.rel =
+              'noopener';
 
           } else {
 
@@ -455,9 +960,7 @@
 
       if (
         wanted.includes(
-          normalizeKey_(
-            key
-          )
+          normalizeKey_(key)
         )
       ) {
 
@@ -475,8 +978,7 @@
   ) {
 
     return String(
-      value ||
-      ''
+      value || ''
     )
       .toLowerCase()
       .replace(
@@ -871,9 +1373,10 @@
             data-open-product="${escapeAttr_(
               product.id
             )}"
-            ${disabled
-              ? 'disabled'
-              : ''
+            ${
+              disabled
+                ? 'disabled'
+                : ''
             }
           >
             ${
@@ -1251,9 +1754,7 @@
                   s
                 )}"
               >
-                ${escapeHtml_(
-                  s
-                )}
+                ${escapeHtml_(s)}
               </button>
             `
           )
@@ -1261,8 +1762,7 @@
           .join('');
 
 
-      filters.addEventListener(
-        'click',
+      filters.onclick =
         event => {
 
           const button =
@@ -1309,8 +1809,16 @@
                 )
               : all
           );
-        }
-      );
+        };
+
+
+    } else if (filters) {
+
+      filters.innerHTML =
+        '';
+
+      filters.onclick =
+        null;
     }
 
 
@@ -1661,9 +2169,7 @@
 
 
             <strong data-qty-value>
-              ${formatQty_(
-                min
-              )}
+              ${formatQty_(min)}
               ${escapeHtml_(
                 unitLabel
               )}
@@ -2365,6 +2871,7 @@
 
 
       if (checkout) {
+
         checkout.disabled =
           true;
       }
@@ -2892,6 +3399,10 @@
       form
     );
 
+    prepareCheckoutNameField_(
+      form
+    );
+
 
     form.addEventListener(
       'submit',
@@ -2906,6 +3417,36 @@
           cartTotal_()
       }
     );
+  }
+
+
+  /*
+   * ПІБ більше
+   * не запам’ятовуємо.
+   */
+  function prepareCheckoutNameField_(
+    form
+  ) {
+
+    const nameField =
+      form.elements.name;
+
+
+    if (!nameField) {
+      return;
+    }
+
+
+    nameField.value =
+      '';
+
+
+    nameField.placeholder =
+      'Наприклад: Ім’я та прізвище';
+
+
+    nameField.autocomplete =
+      'name';
   }
 
 
@@ -3078,6 +3619,11 @@
   }
 
 
+  /*
+   * Зберігаємо тільки телефон.
+   * Старе збережене ПІБ
+   * видаляється.
+   */
   function restoreCustomer_(
     form
   ) {
@@ -3089,24 +3635,52 @@
       );
 
 
-    if (
-      saved.name &&
-      form.elements.name
-    ) {
-
-      form.elements.name.value =
-        saved.name;
-    }
+    const prefill =
+      customerPrefillFromSaved_(
+        saved
+      );
 
 
     if (
-      saved.phone &&
+      prefill.phone &&
       form.elements.phone
     ) {
 
       form.elements.phone.value =
-        saved.phone;
+        prefill.phone;
     }
+
+
+    try {
+
+      localStorage.setItem(
+        STORAGE.CUSTOMER,
+
+        JSON.stringify({
+          phone:
+            prefill.phone ||
+            ''
+        })
+      );
+
+    } catch (_) {
+    }
+  }
+
+
+  function customerPrefillFromSaved_(
+    saved
+  ) {
+
+    return {
+      phone:
+        saved &&
+        saved.phone
+          ? String(
+              saved.phone
+            )
+          : ''
+    };
   }
 
 
@@ -3232,10 +3806,12 @@
 
 
     const payload = {
+
       requestId:
         requestId,
 
       customer: {
+
         name:
           name,
 
@@ -3257,6 +3833,7 @@
           item => {
 
             return {
+
               productId:
                 item.productId,
 
@@ -3278,13 +3855,13 @@
     };
 
 
+    /*
+     * Зберігаємо лише телефон.
+     */
     localStorage.setItem(
       STORAGE.CUSTOMER,
 
       JSON.stringify({
-        name:
-          name,
-
         phone:
           phone
       })
@@ -3350,6 +3927,7 @@
       track_(
         'order_submitted',
         {
+
           value:
             orderValue,
 
@@ -3365,6 +3943,7 @@
 
       location.href =
         'success.html';
+
 
     } catch (error) {
 
@@ -3390,6 +3969,7 @@
           'Підтвердити замовлення';
       }
 
+
     } finally {
 
       state.submitting =
@@ -3399,30 +3979,18 @@
 
 
   /* ======================================================
-     НОВИЙ МЕХАНІЗМ ПІДТВЕРДЖЕННЯ
+     ORDER CONFIRMATION
      ====================================================== */
 
   async function sendOrderAndConfirm_(
     payload
   ) {
 
-    /*
-     * 1. Відправляємо POST
-     * через прихований iframe.
-     *
-     * Відповідь iframe
-     * нам більше НЕ потрібна.
-     */
     postOrderViaIframe_(
       payload
     );
 
 
-    /*
-     * 2. Питаємо сервер
-     * за requestId,
-     * чи замовлення вже записане.
-     */
     const started =
       Date.now();
 
@@ -3451,6 +4019,7 @@
         const status =
           await jsonp_(
             {
+
               action:
                 'orderStatus',
 
@@ -3460,15 +4029,11 @@
               _:
                 Date.now()
             },
+
             10000
           );
 
 
-        /*
-         * Сервер уже знайшов
-         * результат саме цього
-         * requestId.
-         */
         if (
           status &&
           status.ok === true &&
@@ -3507,6 +4072,7 @@
             );
         }
 
+
       } catch (error) {
 
         lastNetworkError =
@@ -3530,16 +4096,8 @@
     }
 
 
-    /*
-     * ВАЖЛИВО:
-     * тут НЕ пишемо,
-     * що замовлення втрачено.
-     *
-     * Воно могло вже
-     * записатися в таблицю.
-     */
     throw new Error(
-      'Замовлення передано на сервер, але підтвердження затрималося. Не натискайте кнопку повторно. Перевірте замовлення в магазині або спробуйте оновити сторінку через кілька хвилин.'
+      'Замовлення передано на сервер, але підтвердження затрималося. Не натискайте кнопку повторно. Зв’яжіться з магазином, щоб уточнити статус замовлення.'
     );
   }
 
@@ -3665,11 +4223,6 @@
     form.remove();
 
 
-    /*
-     * iframe залишаємо
-     * достатньо довго,
-     * щоб Google завершив POST.
-     */
     setTimeout(
       () => {
 
@@ -3821,49 +4374,60 @@
 
     if (social) {
 
-      const links =
+      const links = [
+
         [
-          [
-            'Telegram',
-            setting_(
-              'Telegram'
-            )
-          ],
+          'Telegram',
+          setting_(
+            'Telegram'
+          )
+        ],
 
-          [
-            'Facebook',
-            setting_(
-              'Facebook'
-            )
-          ],
-
-          [
-            'Instagram',
-            setting_(
-              'Instagram'
-            )
-          ],
-
-          [
+        [
+          'Viber',
+          setting_(
+            'Viber — посилання',
+            'Viber / месенджер',
             'Viber',
-            setting_(
-              'Viber',
-              'Viber / messenger',
-              'Viber/messenger'
-            )
-          ]
+            'Viber/messenger'
+          )
+        ],
+
+        [
+          'Facebook',
+          setting_(
+            'Facebook'
+          )
+        ],
+
+        [
+          'Instagram',
+          setting_(
+            'Instagram'
+          )
+        ],
+
+        [
+          'Email',
+          setting_(
+            'Email магазину',
+            'Email',
+            'E-mail'
+          )
         ]
-          .filter(
-            (
-              [
-                ,
-                url
-              ]
-            ) =>
-              Boolean(
-                url
-              )
-          );
+
+      ]
+        .filter(
+          (
+            [
+              ,
+              url
+            ]
+          ) =>
+            Boolean(
+              url
+            )
+        );
 
 
       social.innerHTML =
@@ -3874,20 +4438,33 @@
                 name,
                 url
               ]
-            ) => `
-              <a
-                class="dh-social-link"
-                href="${escapeAttr_(
-                  url
-                )}"
-                target="_blank"
-                rel="noopener"
-              >
-                ${escapeHtml_(
-                  name
-                )}
-              </a>
-            `
+            ) => {
+
+              const href =
+                name === 'Email'
+                  ? 'mailto:' +
+                    url
+                  : url;
+
+
+              return `
+                <a
+                  class="dh-social-link"
+                  href="${escapeAttr_(
+                    href
+                  )}"
+                  ${
+                    name === 'Email'
+                      ? ''
+                      : 'target="_blank" rel="noopener"'
+                  }
+                >
+                  ${escapeHtml_(
+                    name
+                  )}
+                </a>
+              `;
+            }
           )
           .join('');
     }
@@ -3922,62 +4499,6 @@
         ></iframe>
       `;
     }
-  }
-
-
-  /* ======================================================
-     ACCOUNT
-     ====================================================== */
-
-  function renderAccountPage_() {
-
-    const container =
-      document.getElementById(
-        'accountContent'
-      );
-
-
-    if (
-      !container ||
-      document.body.dataset.page !==
-        'account'
-    ) {
-      return;
-    }
-
-
-    container.innerHTML = `
-      <div class="dh-form-card">
-
-        <span class="dh-section-label">
-          Скоро
-        </span>
-
-        <h2>
-          Кабінет покупця готується
-        </h2>
-
-        <p class="dh-muted">
-
-          Зараз замовлення
-          можна оформляти
-          без реєстрації.
-
-          Історію замовлень
-          та самоскасування
-          підключимо окремим етапом.
-
-        </p>
-
-        <a
-          href="catalog.html"
-          class="dh-primary-btn"
-        >
-          Перейти до каталогу
-        </a>
-
-      </div>
-    `;
   }
 
 
